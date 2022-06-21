@@ -8,6 +8,45 @@
     <title>Superpeer E-mail Signature</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <style>
+        .content {
+            padding: 40px;
+            border: 4px dashed transparent;
+            position: relative;
+        }
+
+        .content:after {
+            content: 'Press CMD + C to copy';
+            padding: 4px 8px;
+            display: none;
+            background: #333;
+            color: #FFF;
+            border-radius: 4px;
+            position: absolute;
+            z-index: 999;
+            left: 50%;
+            transform: translate(-50%, 0);
+            bottom: -20px;
+        }
+
+        .content:focus {
+            border-color: #ccc;
+            box-shadow: none !important;
+            outline: 0;
+        }
+
+        .content:focus:after {
+            display: block;
+        }
+
+        .form-label {
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .sidebar{
+            background-color: #FEEFC3;;
+        }
+    </style>
 </head>
 
 <body>
@@ -38,35 +77,51 @@
         <div class="row">
 
 
-            <div class="col-md-3 p-4">
-                <div class="mb-4">
+            <div class="col-md-3 p-4 sidebar">
+                <h5 style="border-bottom: 1px solid #ccc; padding: 10px 0; margin-bottom: 20px;">Main</h5>
+                <div class="mb-2">
                     <label class="form-label">Your Superpeer Profile Photo URL</label>
                     <input type="text" class="form-control" id="inputPhoto">
                 </div>
-                <div class="mb-4">
+                <div class="mb-2">
                     <label class="form-label">Full Name</label>
                     <input type="text" class="form-control" id="inputFullName">
                 </div>
-                <div class="mb-4">
+                <div class="mb-2">
                     <label class="form-label">E-mail</label>
                     <input type="text" class="form-control" id="inputEmail">
                 </div>
-                <div class="mb-4">
+                <div class="mb-2">
                     <label class="form-label">Superpeer Username</label>
                     <input type="text" class="form-control" id="inputUsername">
+                </div>
+                <h5 style="border-bottom: 1px solid #ccc; padding: 10px 0; margin-top: 40px; margin-bottom: 20px;">Other settings</h5>
+                <div class="mb-4">
+                    <label class="form-label">Instagram Page</label>
+                    <div class="d-flex">
+                        <span class="pe-4">TR</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="instagramCheck" onclick="checkInsta();">
+                        </div>
+                        <span class="ps-2">EN</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">Button text</label>
+                    <input type="text" class="form-control" id="inputButtonText" value="Randevu Al">
                 </div>
             </div>
 
 
 
             <div class="col-md-9 p-4">
-                <div contenteditable="true">
+                <div class="content" contenteditable="true">
                     <!-- signature -->
                     <div style="font-family: sans-serif; font-size: 12px; color: #1F2937; line-height: 1.5em;">
 
                         <div
                             style="padding: 4px; border: 3px solid #FCD974;display: inline-block;border-radius: 200px; float: left;">
-                            <img width="64px" height="64px" border="0"
+                            <img width="64px" height="64px" border="0" id="photo"
                                 style="width: 64px; height: 64px; border-radius: 200px;"
                                 src="https://superpeer.com/cdn-cgi/image/width=480,quality=90,anim=true,metadata=none,onerror=redirect/https://lando.superpeer.com/hosts%2FFVsnqEvpiekfksBDd0Fn%2Fd87767f1-c22a-485a-8bd8-49e1b32187ac-avatar.jpg">
 
@@ -74,15 +129,15 @@
 
                         <div style="float:left; padding-left: 16px;">
                             <div style="border-left: 2px solid #FFEEBD; padding-left: 14px;">
-                                <div
+                                <div id="fullname"
                                     style="font-size: 20px; font-weight: bold; padding-bottom: 10px; color: #1F2937; text-decoration: none;">
                                     Fatih Acet
                                 </div>
                                 <div style="margin-bottom: 4px;">
-                                    <img src="assets/icon-mail.png" width="20px" height="20px" border="0"
-                                        style="border: 0;">
+                                    <img src="https://eg.github.io/sp-signature/assets/icon-mail.png" width="20px"
+                                        height="20px" border="0" style="border: 0;">
                                     <div style="display: inline; padding-left: 4px; text-decoration: none !important;">
-                                        <a href="mailto:fatih@superpeer.com"
+                                        <a href="mailto:fatih@superpeer.com" id="eml"
                                             style="text-decoration:none;color: #1F2937;">
                                             <span style="text-decoration:none;color: #1F2937;">
                                                 fatih@superpeer.com
@@ -91,35 +146,42 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <img src="assets/icon-globe.png" width="20px" height="20px" border="0"
-                                        style="border: 0;">
-                                    <div style="display: inline; padding-left: 4px">
-                                        superpeer.com/fatihacet
+                                    <img src="https://eg.github.io/sp-signature/assets/icon-globe.png" width="20px"
+                                        height="20px" border="0" style="border: 0;">
+                                    <div style="display: inline; padding-left: 4px; text-decoration: none !important;">
+                                        <a href="https://superpeer.com/fatihacet" id="user"
+                                            style="text-decoration:none;color: #1F2937;">
+                                            <span style="text-decoration:none;color: #1F2937;">
+                                                superpeer.com/fatihacet
+                                            </span>
+                                        </a>
                                     </div>
                                 </div>
                                 <div style="padding-top: 18px;">
-                                    <a href="#" target="_blank"
+                                    <a href="https://superpeer.com/fatihacet" target="_blank" id="btn"
                                         style="background: #3486FA; color: #FFF; font-weight: bold; border-radius: 8px; text-decoration: none; padding: 9px 16px;">Randevu
                                         Al</a>
                                 </div>
                                 <div style="padding-top: 18px">
-                                    <div style="padding-right: 3px; display: inline;">
+                                    <div style="margin-right: 3px; display: inline;">
                                         <a href="https://superpeer.com/" style="border: 0; text-decoration: none;"
                                             target="_blank">
-                                            <img src="assets/social-superpeer.png" width="28px" height="28px" border="0"
-                                                style="border: 0;">
+                                            <img src="https://eg.github.io/sp-signature/assets/social-superpeer.png"
+                                                width="28px" height="28px" border="0" style="border: 0;">
                                         </a>
                                     </div>
-                                    <div style="padding-right: 3px; display: inline;">
-                                        <a href="https://www.instagram.com/superpeer/" style="border: 0; text-decoration: none;"
-                                            target="_blank">
-                                            <img src="assets/social-instagram.png" width="28px" height="28px" border="0"
-                                                style="border: 0;">
+                                    <div style="margin-right: 3px; display: inline;">
+                                        <a href="https://www.instagram.com/superpeer/"
+                                            style="border: 0; text-decoration: none;" target="_blank" id="insta">
+                                            <img src="https://eg.github.io/sp-signature/assets/social-instagram.png"
+                                                width="28px" height="28px" border="0" style="border: 0;">
                                         </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
+                        <div style="clear: both;"></div>
 
 
                     </div>
