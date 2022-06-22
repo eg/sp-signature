@@ -1,23 +1,10 @@
-
-
-
-// el.addEventListener("keyup", log);
-// function log(e) {
-//     var inputCheck = this.value.length;
-//     if (inputCheck > 0) {
-//         this.parentElement.classList.add("not-empty")
-//     }
-//     else {
-//         this.parentElement.classList.remove("not-empty")
-//     }
-// }
-
 const placeholder = {
     photo: "https://superpeer.com/cdn-cgi/image/width=480,quality=90,anim=true,metadata=none,onerror=redirect/https://lando.superpeer.com/hosts%2FFVsnqEvpiekfksBDd0Fn%2Fd87767f1-c22a-485a-8bd8-49e1b32187ac-avatar.jpg",
     name: "Fatih Acet",
     email: "fatih@superpeer.com",
     username: "fatihacet",
     button: "Randevu Al",
+    
 }
 
 const inputPhoto = document.querySelector("#inputPhoto");
@@ -104,4 +91,29 @@ function checkInsta() {
     else {
         instagram.href= "https://www.instagram.com/superpeer.tr/"
     }
+}
+
+
+var div = document.getElementById("content");
+
+div.onfocus = function() {
+    window.setTimeout(function() {
+        var sel, range;
+        if (window.getSelection && document.createRange) {
+            range = document.createRange();
+            range.selectNodeContents(div);
+            sel = window.getSelection();
+            sel.removeAllRanges();
+            sel.addRange(range);
+        } else if (document.body.createTextRange) {
+            range = document.body.createTextRange();
+            range.moveToElementText(div);
+            range.select();
+        }
+    }, 1);
+};
+
+function copyThat(){
+    document.execCommand('selectAll',false,null)
+    document.execCommand('copy')
 }
